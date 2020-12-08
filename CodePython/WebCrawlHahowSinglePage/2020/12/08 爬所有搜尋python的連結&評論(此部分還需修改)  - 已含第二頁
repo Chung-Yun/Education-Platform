@@ -1,0 +1,51 @@
+#2020/12/08 排每頁每課的網址
+import requests
+from bs4 import BeautifulSoup
+import time
+from selenium import webdriver
+
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+mydriver = webdriver.Chrome('chromedriver', options=chrome_options)
+
+page = 1
+while (page <= 2):
+    url = 'https://hahow.in/courses?search=python&page='+str(page)
+    gettingurl = mydriver.get(url)
+    print("資料爬起來!")
+    time.sleep(3)
+    source = mydriver.page_source
+    soup = BeautifulSoup(source, 'html.parser')
+    
+    class_block = soup.find('div',class_="sc-19z8872-0 erAemI").find('div',class_='list-container').find_all('a')
+    for class_ in class_block :
+        class_url ='https://hahow.in/courses'+ class_.get('href')
+        print(class_url)
+        response = mydriver.get(class_url)
+        time.sleep(3)
+        response_source = mydriver.page_source
+        soup = BeautifulSoup(source, 'html.parser')
+        
+#以下有問題(判斷不成功)
+
+        if 'Python' in soup.find('h4').text :
+            seeMoreButton = mydriver.find_elements_by_xpath("//button[@class='sc-1a6j6ze-0 cYdxxq b21euj-2 gMMXlv']")
+            if len(seeMoreButton) != 0 :
+                press = seeMoreButton.click()
+                press.click()
+            comments= soup.find_all('div',class_='wei2cc-1 gUylJK marg-b-25')
+            count = 1
+            for comment in comments :
+                print('-----------'+ str(count)+ '-----------')
+                point = comment.find('p',class_='marg-b-0').text
+                rating = comment.find('div',{'class':'star-ratings'})
+                stars = rating.attrs['title']
+                time = comment.find('time').text
+                shortTitle = comment.find('p',{'class':'text-strong marg-b-5'}).text
+                print(stars, time, shortTitle)
+                print(point.strip())
+                count += 1
+    page += 1
+            
