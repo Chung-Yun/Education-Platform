@@ -9,7 +9,9 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
-mydriver = webdriver.Chrome('chromedriver', options=chrome_options)
+mydriver = webdriver.Chrome('chromedriver', options=chrome_options) # local
+
+
 
 # URL of our pick
 url = 'https://hahow.in/courses/5d77176845639e00212bc562/main'
