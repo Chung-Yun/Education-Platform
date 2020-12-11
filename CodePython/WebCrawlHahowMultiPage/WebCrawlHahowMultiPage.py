@@ -23,11 +23,24 @@ else:
 page = 0
 df = pd.DataFrame({"標題":[], "url": [], "星數" : [], "日期" : [], "評論標題" : [], "評論內文" : []})
 
-while (page < 1):
+# Define total page
+first_url = 'https://hahow.in/courses?search=python'
+def findTotalPage(myurl):
+    mydriver2 = webdriver.Chrome('chromedriver', options=chrome_options)
+    first_page = mydriver2.get(myurl)
+    time.sleep(3) 
+    first_soup = BeautifulSoup(mydriver2.page_source, 'html.parser')
+    page_block = first_soup.find_all('ul',{'class':"rc-pagination gbga9a-0 jYLVph"})
+    assert len(page_block)==1
+    pages_plus_arrows = page_block[0].find_all('li') # 這邊會多算兩個箭頭
+    return len(pages_plus_arrows) - 2
+total_page = findTotalPage(first_url)
+
+while (page < total_page ):
     page += 1
     url = 'https://hahow.in/courses?search=python&page='+str(page)
     gettingurl = mydriver.get(url)
-    print("資料爬起來! >>> 第"+str(page)+"頁：")
+    print("資料爬起來! >>> 第"+str(page)+"/"+str(total_page)+"頁：")
     time.sleep(3)
     source = mydriver.page_source
     soup = BeautifulSoup(source, 'html.parser')
