@@ -14,31 +14,32 @@ chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
-if os.environ.get("CHROMEDRIVER_PATH")==None:
-    mydriver = webdriver.Chrome('chromedriver', options=chrome_options)
-else: 
-    mydriver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=chrome_options)
+chromedriver_path = os.environ.get("CHROMEDRIVER_PATH")
+if chromedriver_path ==None:
+    chromedriver_path = 'chromedriver'
 
-
-page = 0
+# initialise dataframe
 df = pd.DataFrame({"標題":[], "url": [], "星數" : [], "日期" : [], "評論標題" : [], "評論內文" : []})
 
 # Define total page
 first_url = 'https://hahow.in/courses?search=python'
 def findTotalPage(myurl):
-    mydriver2 = webdriver.Chrome('chromedriver', options=chrome_options)
-    first_page = mydriver2.get(myurl)
+    first_driver = webdriver.Chrome(chromedriver_path, options=chrome_options)
+    first_page = first_driver.get(myurl)
     time.sleep(3) 
-    first_soup = BeautifulSoup(mydriver2.page_source, 'html.parser')
+    first_soup = BeautifulSoup(first_driver.page_source, 'html.parser')
     page_block = first_soup.find_all('ul',{'class':"rc-pagination gbga9a-0 jYLVph"})
     assert len(page_block)==1
     pages_plus_arrows = page_block[0].find_all('li') # 這邊會多算兩個箭頭
+    first_driver.quit()
     return len(pages_plus_arrows) - 2
 total_page = findTotalPage(first_url)
 
+page = 0
 while (page < total_page ):
     page += 1
     url = 'https://hahow.in/courses?search=python&page='+str(page)
+    mydriver = webdriver.Chrome(chromedriver_path , options=chrome_options)
     gettingurl = mydriver.get(url)
     print("資料爬起來! >>> 第"+str(page)+"/"+str(total_page)+"頁：")
     time.sleep(3)
@@ -99,14 +100,14 @@ while (page < total_page ):
                                    "評論內文" : longComments} )
                 # update the dataframe
                 df = df.append(df_of_1_course, ignore_index = True) 
-            print('--------收錄'+ str(count)+ '個評論-----------')  
+            print('--------收錄'+ str(count)+ '個評論-----------') 
+    mydriver.quit()
 
-current_date = datetime.datetime.today().strftime ('%d-%b-%Y')
+
+current_date = datetime.datetime.now().strftime ('%d%b%Y-%H%M%S')
 current_folder = Path('.')
 csv_name = str(page)+'page_result_'+str(current_date)+'.csv'
 path_to_file = current_folder / csv_name 
 df.to_csv(path_to_file)
-
-mydriver.quit()
 
 
