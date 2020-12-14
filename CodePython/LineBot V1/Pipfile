@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+gunicorn = "==19.9.0"
+line-bot-sdk = "==1.14.0"
+Flask = "==1.1.1"
+bs4 = "*"
+selenium = "*"
+python-decouple = "*"
+pymysql = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

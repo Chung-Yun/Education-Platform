@@ -1,3 +1,5 @@
-.DS_Store
+*.DS_Store
 *geckodriver.log
 *.python-version
+*.swp
+*.env
