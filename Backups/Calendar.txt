@@ -39,12 +39,8 @@ Q4: PRE Python 負面
 - 要回什麼類型的訊息（目前規定使用者輸入 「前綴字 Python」，期待機器人輸出推薦課程資訊）→ 細節參考呈現方式
 - 如果想看目前什麼都沒有的雲端資料庫可以參考這個影片
 	下載 MySQLWorkBench 這個軟體後
-按照影片中教學輸入以下訊息（這些資料要保密）
-USER=dvnhqsxop2wby02j
-PASSWD=u1yn8r5i5rtb88wo
-HOST=klbcedmmqp7w17ik.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
-PORT=3306
-DATABASE_NAME=y9za7r7itim34n86
+按照影片中教學輸入以下訊息（資料問瑞婷）
+
 目前我對待資料庫的方式比較像是資料的雲端儲存空間（免費空間上限5G），為了加速機器人作業用的，儲存我們大家整理好的資料，使用者指令下來後，機器人不用再花時間爬資料
  
 20201212  23:30 ~ 1:30
