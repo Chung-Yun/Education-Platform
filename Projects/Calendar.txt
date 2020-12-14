@@ -1,0 +1,202 @@
+Calendar
+TO-DO （第二週）
+1.  [仲芸、宜芳] 清資料程式 (每門課程標籤 - 專業用詞、正面評價、負面評價出現的次數 & 在哪些評星數出現) : 仲芸和宜芳  週日各寫一次做法，週一討論
+列出需要的資料(預期的資料欄位)
+寫程式算資料
+2. [詠鈞、瑞婷] 評論數量不對
+原因：程式只會按一次按紐
+需要改寫程式，可能會用到 “while” 迴圈，需要定義好結束條件
+3. [詠鈞、瑞婷] 爬蟲加：
+     a. 講師姓名
+     b. 金額
+4. [瑞婷] LINE BOT 跟 資料庫串接 DONE
+	→ 串好後需要準備爬找資料庫語法
+
+
+
+20201214 19:30 ~ 21:00
+- 對話流程設計：設計使用者與機器人的對白（最好是一問一答）
+	範例：
+	PRE = “課金小天才”
+	Q1: PRE HELP
+	A1: （回傳使用說明）
+	Q2: PRE Python
+	A2: 我推薦（隨機抽取資料庫的一門課程）
+	Q2: PRE Python 關鍵字
+	A2: 我推薦（抽取資料庫的「最符合」一門課程）
+		「最符合」的定義可能是「此關鍵字在此課程評論中出現次數最高」
+	Q3: PRE Python 正面
+	A3: 我推薦（隨機抽取資料庫的「好」課程）
+Q4: PRE Python 負面
+	A4: 我推薦（隨機抽取資料庫的「壞」課程）
+	Q5: PRE 其他
+	A5: 我看不懂你的問題耶，請問符合「格式」的問題，如果不知道「格式」是什麼，試試看「PRE HELP」
+
+	
+- Line Bot : 
+	- 名字 & 前綴字設定
+	- 大頭貼 （仲芸、宜芳、詠鈞 ）
+- 要回什麼類型的訊息（目前規定使用者輸入 「前綴字 Python」，期待機器人輸出推薦課程資訊）→ 細節參考呈現方式
+- 如果想看目前什麼都沒有的雲端資料庫可以參考這個影片
+	下載 MySQLWorkBench 這個軟體後
+按照影片中教學輸入以下訊息（這些資料要保密）
+USER=dvnhqsxop2wby02j
+PASSWD=u1yn8r5i5rtb88wo
+HOST=klbcedmmqp7w17ik.cbetxkdyhwsb.us-east-1.rds.amazonaws.com
+PORT=3306
+DATABASE_NAME=y9za7r7itim34n86
+目前我對待資料庫的方式比較像是資料的雲端儲存空間（免費空間上限5G），為了加速機器人作業用的，儲存我們大家整理好的資料，使用者指令下來後，機器人不用再花時間爬資料
+ 
+20201212  23:30 ~ 1:30
+星期一上課討論
+- 對話流程設計
+- Line Bot : 
+	- 名字 & 前綴字設定
+	- 大頭貼 （仲芸、宜芳、詠鈞 ）
+- 要回什麼類型的訊息（使用者流程範例：輸入 Python 輸出下一點的內容）
+
+TO-DO （第二週）
+- [仲芸、宜芳] 清資料程式 (每門課程標籤 - 專業用詞、正面評價、負面評價出現的次數 & 在哪些評星數出現) : 仲芸和宜芳  週日各寫一次做法，週一討論
+列出需要的資料(預期的資料欄位)
+寫程式算資料
+- [詠鈞、瑞婷] 評論數量不對(button only pressed once; “while”)
+- 選課條件優化（ex:加相關字） →  暫緩
+
+  希望可以爬到更多相關的資料，像是課程說明有提到Python，或是 和Python相關的課程
+- Line Bot : 
+	- 名字&大頭貼  → 星期一上課討論
+	- 前綴字設定  → 星期一上課討論
+- 要回什麼類型的訊息（使用者流程範例：輸入 Python 輸出下一點的內容）
+ → 星期一上課討論
+- 討論產出：
+- 內容：
+- 必出現：課程名稱、課程連結、課程重點（三個標籤）
+- 再加：[講師姓名、金額]、課程縮圖
+- 之後再說：符合喜好程度（百分比） →  暫緩
+- GUI: 這邊大概需要 html 時間不夠可先抄原本的格式  →  暫緩
+
+DONE
+- 爬找課程圖片，加到 dataframe 裡
+20201207 19:30 ~ 21:00
+TO-DO
+ 平時有進度請到群組喊聲，週五回報當週進度，週六開會時sync彼此狀況、討論問題
+ 這週要做的事主要是用數字表示，英文是建議步驟，可自行視情況做調整
+爬蟲程式 : 詠鈞和瑞婷
+找出 hahow 上所有 python 課程 (如果是爬搜尋頁，需清掉非 python 課程)
+爬每一門 python 課程的課程名稱、使用者、評星數、評價內容
+字典庫 (語料 & dictionary 語法) : 仲芸和宜芳
+	列在字典庫(含原始資料)
+列出 hahow 上 python 課程評價主要用了哪些詞
+找語料庫
+列出語料庫中需要的詞
+寫 dictionary 語法將分類與對應標籤存成python檔案
+清資料程式 (每門課程標籤 - 專業用詞、正面評價、負面評價出現的次數 & 在哪些評星數出現) : 仲芸和宜芳
+列出需要的資料(預期的資料欄位)
+寫程式算資料
+找使用者介面工具 : 全體
+發想資料可能的應用方式
+思考使用者是誰? 怎樣的介面使用者比較好操作? 使用者會從哪些管道接觸這個功能? 
+試畫user flow(使用者操作流程)
+找適合的使用者介面工具
+
+AGENDA
+確認 & 交出 proposal
+過專案流程架構
+專案的工作拆分成四大塊
+數字代表需要做的事
+   -   代表註記和需要確認的事情
+【抓課程資料】
+1.列出hahow所有Python課程網站
+-爬蟲或手動？ 爬蟲
+2.清掉不是Python的課程
+3.爬下課程頁面上的資料
+-需要資料：課程名稱、使用者、評星數、評價內容
+<div class="star-ratings" title="4 Stars" style="position: relative; box-sizing: border-box; display: inline-block;">
+-資料如何儲存？
+寫檔存資料 用IO模組 要存csv還是spreadsheet(視使用的視覺化工具而定)
+ 
+【製作字典庫】
+1.找語料庫
+-繁中為主
+2.製作字典庫 > 用dictionary建語法後，跟原檔案一起存
+-字典庫是收單詞，單詞=標籤
+-需要資料：專業用詞、正面評價用詞、負面評價用詞
+-詞不要太多怕之後跑起來會卡
+ 2.a 看課程評價主要是用哪些詞
+ 
+【清理資料】
+1.每門課程標籤(專業用詞、正面評價、負面評價)出現的次數&在哪些評星數出現
+-誰可以幫忙寫程式？簡單
+-資料要怎麼存才方便後續使用？
+ 如:欄位、存在哪裡  > 用dictionary建語法後，跟原檔案一起存
+ 
+【使用者操作介面】
+-自己寫 還是 用現成的？ 先確認使用者介面再找
+1.串接資料
+-誰可以幫忙？
+2.排版
+-誰可以幫忙？
+備案: 免費的chatbot(line使用者主動點擊的不用付費；fb粉專私訊)
+-參考資料: 
+https://stackoverflow.max-everyday.com/2018/05/python-gui-framework/
+https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Introduction
+https://blog.longwin.com.tw/2013/03/bryphon-browser-python-2013/
+其他: datastudio、line、power BI
+ 
+ 
+ 
+確認分工
+爬蟲程式 : 詠鈞和瑞婷
+字典庫 (語料 & dictionary語法) : 仲芸和宜芳
+清資料程式 (每門課程標籤 - 專業用詞、正面評價、負面評價出現的次數 & 在哪些評星數出現) : 仲芸和宜芳
+找使用者介面工具 (資料應用發想 & 使用者操作流程) : 全體
+ 
+找助教諮詢 20:30~20:45
+ 
+20201205 23:30 ~ 1:30
+TO-DO
+週日確定專案名稱
+週日補proposal技術資料
+週日大家都試爬一次hahow，週一課堂討論
+週一出一份字典庫
+視情況再補內容，有補內容需在試算表裡做註記，再到line喊一聲
+三大領域:領域關鍵字、正面評價、負面評價
+週二出資料庫欄位，大家再討論
+
+AGENDA
+Self-introduction & Make sure what our team members want and how will we present the proposal
+大家每週可以花多少時間做?
+每週六23:30過本週進度，臨時有事需週五告知
+平常有問題可先丟 trello並在Line群組喊一聲，大家看到可以先回 
+仲芸:30小時(平日時間較多:一、二、三、五，週六早上、周日下午晚上。19~21家庭旅遊)
+詠鈞:20小時(平日時間較少,五可以熬夜、週六或週日其中一整天都可以)
+宜芳:25小時(六、日、一、二、四、五。接近期末比較不確定每周有空的時間)
+瑞婷:23小時(六為主 平日彈性但有時差問題)
+瑞婷協助，在提案和簡報提有瑞婷協助
+ 
+In this project we may concentrate on one educational platform then expand to other platforms.  (This idea requires other teammates confirmation)
+先以 hahow 為主
+擇一平台
+台灣的平台
+新的平台網頁較簡單
+平台需要有課程評價
+	參考平台
+https://sat.cool/home
+斜槓青年｜Slashie 斜槓青年/提升工作技能即戰力/最符合業界潮流的Know how (slashslashie.com)
+Choose one field to make up the we me dictionary, eg. coding, data analyst
+領域以python為主
+Finish proposal.
+https://docs.google.com/document/d/1QvSvXmzhHDpwRQ20Bjhmql7HiyEwd2bNWSTnf-xe6Wc/edit#
+Teach how to use Github 
+ 
+ 
+20201205 14:30~16:30
+Which platform ? or all ? (Known : Udemy Yotta Hahow Coursera)
+https://www.udemy.com/
+https://www.yottau.com.tw/home
+https://hahow.in/
+https://www.coursera.org/
+ Github repo setup
+ Brainstorm to finest task that we need in this project
+ Write proposal.
+
