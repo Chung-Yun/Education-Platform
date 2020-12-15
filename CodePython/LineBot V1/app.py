@@ -48,7 +48,8 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text.find("課金小天才")==0: 
+    prefix = "買課幫手 " # there is a blank space
+    if event.message.text.find(prefix)==0: 
         # reply to message start with 課金小天才
         my_message = event.message.text[6:]
         if len(my_message)<10:
@@ -75,7 +76,7 @@ def handle_message(event):
             target = event.source.group_id
         else:
             target = event.source.user_id      
-        line_bot_api.push_message(target, TextSendMessage(text=man.helpMe()))
+        line_bot_api.push_message(target, TextSendMessage(text=man.helpMe(prefix)))
 
 if __name__ == "__main__":
     app.run()
