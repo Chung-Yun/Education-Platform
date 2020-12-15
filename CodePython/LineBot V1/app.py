@@ -50,8 +50,8 @@ def callback():
 def handle_message(event):
     prefix = "買課幫手 " # there is a blank space
     if event.message.text.find(prefix)==0: 
-        # reply to message start with 課金小天才
-        my_message = event.message.text[6:]
+        # reply to message start with prefix
+        my_message = event.message.text[len(prefix):]
         if len(my_message)<10:
             topic = my_message 
             myurl = 'https://hahow.in/courses?search=' + topic
