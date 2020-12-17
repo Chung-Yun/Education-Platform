@@ -45,24 +45,18 @@ while (page < total_page ):
     time.sleep(3)
     source = mydriver.page_source
     soup = BeautifulSoup(source, 'html.parser')
-    #print(soup.prettify())
     class_block = soup.find_all('div',{'class':"sc-10r5mg2-0 fVNHJD hh-course-brief relative block"}) 
-    #print(class_block)
     for class_ in class_block :
         #print(class_)
         class_href = class_.find('div','cover-wrap relative').find('a')
         class_url ='https://hahow.in'+ class_href.get('href')
         class_img = class_.find('div', {'class':'cover-image-wrap relative'}).find('img')
-        #print(class_.find('div', {'class':'cover-image-wrap relative'}))
         if class_img!= None and class_img.has_attr('src'):
-          print(class_img['src'])
-        # if class_img!= None and class_img.has_attr('alt'): # another way to find title
-        #  print(class_img['alt'])
+            print(class_img['src'])
         response = mydriver.get(class_url)
         time.sleep(3)
         response_source = mydriver.page_source
         response_soup= BeautifulSoup(response_source, 'html.parser')
-        #title = response_soup.find('h1',{'class':'title text-center'}).text
         title = response_soup.find('h1').text
         print(title)
         #print(class_img)
