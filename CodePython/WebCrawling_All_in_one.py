@@ -145,6 +145,6 @@ while (page < total_page ):
 current_date = datetime.datetime.now().strftime ('%d%b%Y-%H%M%S')
 current_folder = Path('.')
 csv_name = 'Comments_'+str(current_date)+'.csv'
-path_to_file = current_folder / csv_name 
+path_to_file = current_folder / 'output' / csv_name 
 df.to_csv(path_to_file)
 print("file saved: " + str(path_to_file))
