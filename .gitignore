@@ -3,3 +3,4 @@
 *.python-version
 *.swp
 *.env
+CodePython/output/*
