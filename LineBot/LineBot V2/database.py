@@ -4,20 +4,6 @@ import pymysql
 import pymysql.cursors
 import pandas as pd
 
-"""
-There is only one table "comments" in the database with following columns:
-    "評論ID"   : comment_id      int       primary key
-    "標題"     : class_title     varchar
-    "url"      : class_url       varchar
-    "星數"     : stars           int or varchar  
-    "老師"     : teacher         varchar
-    "價格"     : price           int or varchar      (NTD is always integer)
-    "日期"     : comment_date    date or varchar  
-    "評論標題" : comment_title   varchar
-    "評論內文" : comment_text    varchar
-I avoid naming the columns with chinese to avoid problems.
-"""
-
            
 def connectToDatabase():
     """ Connects to the database """
@@ -144,7 +130,25 @@ def resetTableReplies():
 
 
 
-""" Table type II / tABLE_name = Comments """
+""" Table type II / table_name = Comments """
+
+
+"""
+There is only one table "comments" in the database with following columns:
+    "評論ID"   : comment_id      int       primary key
+    "標題"     : class_title     varchar
+    "url"      : class_url       varchar
+    "圖片"     : class_url       varchar
+    "星數"     : stars           int or varchar  
+    "老師"     : teacher_name    varchar
+    "價格"     : price           int or varchar      (NTD is always integer)
+    "日期"     : comment_date    date or varchar  
+    "評論標題" : comment_title   varchar
+    "評論內文" : comment_text    varchar
+I avoid naming the columns with chinese to avoid problems.
+"""
+
+
 
 def defaultCommentsDF():
     default_comments_df = pd.DataFrame({\
