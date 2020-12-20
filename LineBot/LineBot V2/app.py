@@ -366,8 +366,18 @@ def handle_postback(event):
     elif event.postback.data == 'confirm_suggestion':
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text='結束'))
     elif event.postback.data == 'decline_suggestion':
-        target = 'Python'
-        line_bot_api.reply_message(event.reply_token, feature_proposal(event, target)) # back to this
+        label = 'Python'
+        user_id = target = event.source.user_id
+        # status set to 0 again
+        register_df = pd.DataFrame({\
+                        "user_id"       : [user_id], \
+                        "reply"         : [label], \
+                        "choices"       : [''], \
+                        "time_stamp"    : ['date'], \
+                        "status"        : [0]}) 
+        db.addTableFromDF('replies', register_df)
+        
+        line_bot_api.reply_message(event.reply_token, feature_proposal(event, label)) # back to this
 
                 
 
