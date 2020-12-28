@@ -5,9 +5,8 @@ I built a bot for a tiny project. As a noob in programming who has goldfish's me
 >In one sentence: this is a **LINE bot** written in **Python** deployed to **Heroku** and connected to a **MariaDB**.
 
 The note is organised in three sections:
-1. [LINE Bot](#LINE-Bot)
-1. [Heroku](#Heroku)
-1. [Other Functionalities](#Other-Functionalities)
+
+There are three parts in this note: First, there is an introduction on main code of the [LINE Bot](#LINE-Bot) which is written in Python. Then, there are some intstructions on how to deploy the app to [Heroku](#Heroku). Lastly, we can add [Other Functionalities](#Other-Functionalities) to make the bot more powerful, such as: webcrawling and databases.
 
 ### Before started
 
@@ -21,39 +20,39 @@ Not essential but better to have:
 - [ ] **MySQLWorkbench** (make debugging easier)
 
 ## LINE Bot
-
 - [Account Creation](#Account-Creation)
 - [Basic Setup](#Basic-Setup)
 - [The Code](#The-Code)
-### Account Creation
 
+### Account Creation
 1. You need to have a LINE account.
-2. Go to the [LINE developers page](https://account.line.biz/login?redirectUri=https%3A%2F%2Fdevelopers.line.biz%2Fconsole%2F) and sign in.
+2. Go to the [LINE developers page](https://account.line.biz/login?redirectUri=https%3A%2F%2Fdevelopers.line.biz%2Fconsole%2F) and sign in with your LINE account (the same one).
 
 |![](https://i.imgur.com/nQqlex7.png) |![](https://i.imgur.com/YkSxceG.png)|![](https://i.imgur.com/Qol5BCI.png)|
 |:---:|:---:|:---:|
 
 3. Create a **provider**.
 4. Create a **messenging API channel**. We will need to fill out the following informations:
-    1. Channel type : Messenging API
+    1. Channel type : Messenging API 
     2. Provider : The one you just created for example.
     3. Channel icon (optional)
-    4. Channel name
-    5. Channel description
-    6. Category (scrolling list)
-    7. Subcategory (scrolling list)
-    8. Email address
-    9. Privacy policy URL (optional)
-    10. Terms of use URL (optional)
-    11. [LINE Official Account Terms of Use](https://terms2.line.me/official_account_terms_tw?lang=zh-Hant)
-    12. [LINE Official Account API Terms of Use](https://terms2.line.me/official_account_api_terms_tw?lang=zh-Hant)
-6. There wil be additional privacy agreement that you need to agree to.
+    4. Channel name (the name of your bot)
+    6. Channel description
+    7. Category (scrolling list)
+    8. Subcategory (scrolling list)
+    9. Email address
+    10. Privacy policy URL (optional)
+    11. Terms of use URL (optional)
+    12. [LINE Official Account Terms of Use](https://terms2.line.me/official_account_terms_tw?lang=zh-Hant)
+    13. [LINE Official Account API Terms of Use](https://terms2.line.me/official_account_api_terms_tw?lang=zh-Hant)
+    
+5. There wil be additional privacy agreement that you need to agree to.
 
 |![](https://i.imgur.com/OOfCWhn.png)| ![](https://i.imgur.com/wLf2jN2.png) | ![](https://i.imgur.com/Mpfnb8n.png) |
 |:---:|:---:|:---:|
 
-After these steps, we have created a LINE account for our LINE bot.
 
+After these steps, we have created a LINE account for our LINE bot.
 ### Basic Setup
 
 - [Secret Keys](#Secret-Keys)
@@ -61,15 +60,17 @@ After these steps, we have created a LINE account for our LINE bot.
 
 #### Secret Keys
 
-There are two keys that you will need to note down:
+There are two impotant keys that we note down for [later use](#Hiding-the-Keys): 
 1. Channel secret
     - You can find this key under **basic settings**
- 2. Channel access token
-    - You can find this key under **Messenging API** click on **issue** if it is note generated yet. 
+2. Channel access token
+    - You can find this key under **Messenging API** click on **issue** if it is not generated yet.
+
+The keys are high secret and should not be communicated to anyone else.
 
 #### Modifiable Features
 
-The following is my setting for my line bot, these are optional. Do whatever suites your need.
+The following is my setting for my line bot, these are optional. Do whatever that suites your need.
 
 | | Default | My Choice |
 |-|-|-|
@@ -77,7 +78,7 @@ The following is my setting for my line bot, these are optional. Do whatever sui
 | Auto-reply messages | Enable | Disabled | 
 | Greeting messages | Enable | Disabled | 
 
->You can change your these feature (including app name and icon) in LINE Official Account Manager 
+>You can change your these features (including app name and icon) in LINE Official Account Manager 
 >```=url
 >https://manager.line.biz/account/{YOUR-BOT-BASIC-ID}/setting
 >```
@@ -86,9 +87,9 @@ The following is my setting for my line bot, these are optional. Do whatever sui
 
 
 ### The Code
-There are three [examples](line-bot-sdk-python/examples/) on the GitHub repo, line/line-bot-sdk-python, when I write this note. I started from downloading one of them and make changes to it.
+There are three [examples](line-bot-sdk-python/examples/) on the GitHub repository, line/line-bot-sdk-python, when I write this note. I started from downloading one of them and make changes to it.
 
-Here is an minimalist example of an echo bot. In a file *app<i></i>.py*, we can write:
+Here is an minimalist example of an echo bot that repeat whatever it receives as a message. We create a file named *app<i></i>.py*, which is the main file of the application. Inside, we can write:
 
 ##### app<i></i>.py 
 ```python=
@@ -105,7 +106,7 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage
 )
 
-app = Flask(__name__)
+app = Flask(__name__) # This is a Flask app.
 
 # get KEYS from your environment variable
 channel_secret = config('LINE_CHANNEL_SECRET')
@@ -131,7 +132,6 @@ def callback():
 
     return 'OK'
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(event.reply_token, TextSendMessage(text=event.message.text))
@@ -141,39 +141,38 @@ if __name__ == "__main__":
     app.run()
 ```
 
-This piece of code will work if you simple replace **LINE_CHANNEL_SECRET** and **LINE_CHANNEL_ACCESS_TOKEN** with the keys that we noted [previously](#Secret-Keys). However, it is not safe to hard code your secrets inside the script. Here, I save the keys in a **.env** file and they are called as **environment variables** when the app is running.
 
-A typical **.env** file will look like:
+###### Hiding the Keys
+This piece of code will work if you simply replace **config(LINE_CHANNEL_SECRET)** and **config(LINE_CHANNEL_ACCESS_TOKEN)** with the keys that we noted [previously](#Secret-Keys). However, it is not safe to hard code your secrets inside the script.
+
+> If someone knows the two keys, they are able to create a app using those keys and do goofy stuff in the name of your LINE bot.
+
+There exists several methods to hide keys and one can choose whatever they are used to. Here, we import the function **config** from **decouple** and the variable are saved in a file named *.env*. When running the app, the varaibles defined in *.env* becomes temporary environment variables. The function **config** searches the variables from the environment and the application can make use of the variables.
+
+A typical **.env** file looks like:
 ```shelle = zsh
 LINE_CHANNEL_ACCESS_TOKEN=YOUR_LINE_CHANNEL_ACCESS_TOKEN_HERE
 LINE_CHANNEL_SECRET=Your_LINE_CHANNEL_SECRET_HERE
 ```
-Here, we import the function **config** from **decouple** to call custom environment variable from the .env file. There exists other methods to hide keys and one can choose whatever they are used to.
 
-#### Test Things locally
+#### Test Things Locally
 
-If Python is intalled, we can test the app locally
+Once everything mentioned in this section is set and if Python is installed locally, we can test the application locally.
 ```shell=zsh
 python app.py
 ```
-If everthing is installed correctly, the Flask app will start running locally. However if you add your bot as a friend and send messages, it won't reply because the webhook is not congifured yet. In the next part, we will deplot the app to Heroku.
+If everthing is installed correctly, the Flask app will start running locally. However when you add your bot as a friend and send messages, it won't reply because the [webhook](https://en.wikipedia.org/wiki/Webhook) is not configured yet. In the next section, we will deploy the app to Heroku.
 
 
 >### Reference : LINE Bot Basics
 >1. [LINE developers website](https://developers.line.biz/zh-hant/reference/messaging-api/)
 >1. [Github: line/line-bot-sdk-python](https://github.com/line/line-bot-sdk-python)
->1. [LINE:使用 Heroku 建立範例聊天機器人](https://developers.line.biz/zh-hant/docs/messaging-api/building-sample-bot-with-heroku/#%E9%83%A8%E7%BD%B2-echo-%E7%AF%84%E4%BE%8B%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA) (Mandarin)
 >1. [[Python Linebot]教你如何使用Python成功串接Linebot(2020版)](https://medium.com/@zx2515296964/python-linebot-%E6%95%99%E4%BD%A0%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8python%E6%88%90%E5%8A%9F%E4%B8%B2%E6%8E%A5linebot-2020%E7%89%88-c98672eec44e) (Mandarin)
-
-
-
 
 
 ## Heroku
 
-- [Additional Files](#Additional-Files)
-- [Deploy to Heroku](#Deploy-to-Heroku)
-- [Configure Webhook](#Configure-Webhook)
+Some [additional files](#Additional-Files) are required before [deploying to Heroku](#Deploy-to-Heroku). Once the app is up and running on Heroku, we can [configure the Webhook](#Configure-Webhook) at LINE developers website.
 
 ### Additional Files
 When deploying to the cloud, you may need some additional files.
@@ -221,14 +220,16 @@ The *Procfile* doesn't have any extension! To the file we write the following li
 ```=Procfile
 web: gunicorn app:app –preload 
 ```
+This [Procfile](https://devcenter.heroku.com/articles/procfile) specifies the commands that are executed by the Heroku app on startup as a web process. 
 
+---------------
 Until now, locally we have a folder with the following files inside:
 
 >app<i></i>.py
 >: the main application
 >
 >.env
->: where we stores the keys
+>: where we hide the keys
 >
 >requirements.txt
 >: indicates the dependencies
@@ -240,21 +241,55 @@ Until now, locally we have a folder with the following files inside:
 >: tells Heroku how to run our app
 
 
+---------------------
 
-### Deploy to Heroku
+### Deploy to Heroku 
 
 Login to [Heroku](https://dashboard.heroku.com/apps) and **create a new app**.
 
 |![](https://i.imgur.com/Q8ncf4p.png)|![](https://i.imgur.com/hEwoNJK.png)|
 |:-:|:-:|
 
-Under **settings**, 
+In the dashboard of the Heroku app, there are several tabs:
+![](https://i.imgur.com/PsSTGgH.png)
+Under *Settings/config vars*, put your **LINE_CHANNEL_ACCES_TOKEN** and  **LINE_CHANNEL_SECRET** here.
+> We will not deploy *.env* to Heroku. Instead, we store all the keys here and Heroku can fetch them when the app needs them.
+
 |![](https://i.imgur.com/RwJhaAr.png)|![](https://i.imgur.com/xBZoeh5.png)|
 |:-:|:-:|
 
-Under **deploy**, you will find that there is a short tutorial on how to deploy your app to Heroku like in the following picture. Just follow the instructions to push your app to the the cloud.
 
-![](https://i.imgur.com/vOB8ewG.png)
+
+After configuring the variables, we deploy the local files to Heroku. The following is a step by step guide:
+- Download and install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli)
+- login to Heroku from the command line
+```shell=zsh
+heroku login
+```
+- This will redirect to a webpage for login.
+- Create a git repository and link it to the app.
+```shell=zsh
+cd path_to_project_directory
+git init # initialize the directory as a local git repository
+heroku git:remote -a {name_of_heroku_app} # link your local git repository to your heroku app
+```
+
+- Add a *.gitignore* file to ignore *.env.* file in the same directory. Write the following line in the file.
+```=.gitignore
+.env
+```
+- Deploy the files to Heroku.
+```shell=zsh
+#(in the same directory)
+git add . # keep track of all files excluding the one in .gitignore (i.e. .env)
+git commit -m "first commit to heroku" # commit with a message
+git push heroku master # pushes the files in master branch to heroku
+```
+
+>You can also refer to your Heroku app's dashboeard, under *Deploy/Deploy using Heroku Git*, there is a short tutorial on how to deploy your app to Heroku.
+
+
+
 
 ### Configure Webhook
 
@@ -271,8 +306,9 @@ Replace **HEROKU_APP_NAME** with the app's name then place it into **Messenging 
 Now, the app is up running and we can expand our code, keep track of it with git and push changes to Heroku for updates.
 
 >### Reference : Deploy to Heroku
->1. [How to deploy python selenium script on Heroku](https://www.youtube.com/watch?v=rfdNIOYGYVI)
 >1. [《Line Bot教學》用 Heroku、Python 建立自己的 Line Bot](https://cruelshare.com/line-bot-second/) (Mandarin)
+>1. [LINE:使用 Heroku 建立範例聊天機器人](https://developers.line.biz/zh-hant/docs/messaging-api/building-sample-bot-with-heroku/#%E9%83%A8%E7%BD%B2-echo-%E7%AF%84%E4%BE%8B%E8%81%8A%E5%A4%A9%E6%A9%9F%E5%99%A8%E4%BA%BA) (Mandarin)
+
 
 ## Other Functionalities
 
@@ -299,23 +335,33 @@ chrome_options.binary_location = config('GOOGLE_CHROME_BIN')
 chromedriver_path = config('CHROMEDRIVER_PATH')
 ```
 
-add to your **.env** file
+- If you are running the app locally, you need to configure the *.env* file. Here is an example where I configure the variables on a mac:
+```=.env
+CHROMEDRIVER_PATH = /usr/local/bin/chromedriver 
+GOOGLE_CHROME_BIN = /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome
+```
+- If you are running the app on Heroku, remember to configure the variables accordingly
 ```=.env
 CHROMEDRIVER_PATH = /app/.chromedriver/bin/chromedriver
 GOOGLE_CHROME_BIN = /app/.apt/usr/bin/google-chrome
 ```
+![](https://i.imgur.com/wrFiYzU.png)
 
-We also need to provide two buildpacks' url to Heroku : (It is under *Settings/Buildpacks*.)
+These variables tells Heroku where to find Google Chrome and its driver on the cloud server. In addition, we need to provide two **buildpacks** to Heroku. It is under *Settings/Buildpacks*. 
+
+|![](https://i.imgur.com/WNpxP9l.png)|![](https://i.imgur.com/m5qzUSh.png)|
+|:-:|:-:|
+Click on **Add buildpack** and paste the following links one at a time.
 
 1. [heroku/heroku-buildpack-google-chrome](https://github.com/heroku/heroku-buildpack-google-chrome)
 ```https://github.com/heroku/heroku-buildpack-google-chrom```
 2. [heroku/heroku-buildpack-chromedriver](https://github.com/heroku/heroku-buildpack-chromedriver)
 ```https://github.com/heroku/heroku-buildpack-chromedrive```
 
-|![](https://i.imgur.com/WNpxP9l.png)|![](https://i.imgur.com/m5qzUSh.png)|
-|:-:|:-:|
+At the end, the screen should look like this picture:
+![](https://i.imgur.com/RsMGto0.png)
 
-With these set, we can write web crawling code with Python using Selenium and run the app on Heroku.
+With these being set, we can write web crawling code with Python using Selenium and run the app on Heroku.
 
 >### Reference : Selenium on Heroku 
 >1. [How to deploy python selenium script on Heroku](https://www.youtube.com/watch?v=rfdNIOYGYVI)
